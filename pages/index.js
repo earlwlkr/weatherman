@@ -1,10 +1,14 @@
 import Head from 'next/head';
+import useSWR from 'swr';
 
 import styles from '../styles/Home.module.css';
 import SearchBar from 'components/SearchBar';
 import ForecastList from 'components/ForecastList';
 
+const fetcher = url => fetch(url).then(r => r.json())
+
 export default function Home() {
+  const { error, data } = useSWR('/api/weather/forecastNext5Days?q=ho+chi+minh', fetcher);
   return (
     <div className={styles.container}>
       <Head>
@@ -13,15 +17,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Weatherman
-        </h1>
+        <h1 className={styles.title}>Weatherman</h1>
 
         <p className={styles.description}>
           <SearchBar />
         </p>
 
-        <ForecastList items={[]} />
+        <h2>{data?.location}</h2>
+
+        <ForecastList items={data?.forecast || []} />
       </main>
 
       <footer className={styles.footer}>
