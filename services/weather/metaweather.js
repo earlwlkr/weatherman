@@ -39,8 +39,8 @@ function formatResponse(title, response) {
         date: new Date(item.applicable_date),
         state: item.weather_state_name,
         stateAbbr: item.weather_state_abbr,
-        tempMin: item.min_temp,
-        tempMax: item.max_temp,
+        tempMin: Math.floor(item.min_temp),
+        tempMax: Math.floor(item.max_temp),
       };
     }),
   };
