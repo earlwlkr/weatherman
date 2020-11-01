@@ -16,7 +16,7 @@ export default function ForecastItem({ data }) {
         />
       </div>
       <p className={styles.temps}>
-        {tempMin} ~ {tempMax}
+        {tempMin}°C ~ {tempMax}°C
       </p>
     </div>
   );
