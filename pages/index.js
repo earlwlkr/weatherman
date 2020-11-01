@@ -1,14 +1,30 @@
+import React from 'react';
 import Head from 'next/head';
 import useSWR from 'swr';
+import debounce from 'lodash/debounce';
 
 import styles from '../styles/Home.module.css';
 import SearchBar from 'components/SearchBar';
 import ForecastList from 'components/ForecastList';
 
-const fetcher = url => fetch(url).then(r => r.json())
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Home() {
-  const { error, data } = useSWR('/api/weather/forecastNext5Days?q=ho+chi+minh', fetcher);
+  const [query, setQuery] = React.useState('');
+  const { error, data } = useSWR(
+    `/api/weather/forecastNext5Days?q=${query}`,
+    fetcher
+  );
+
+  const onQueryChange = debounce((text) => {
+    console.log(text);
+    setQuery(text);
+  }, 500);
+
+  if (error) {
+    console.log('fetch forecast error', error);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +36,7 @@ export default function Home() {
         <h1 className={styles.title}>Weatherman</h1>
 
         <p className={styles.description}>
-          <SearchBar />
+          <SearchBar onChange={onQueryChange} />
         </p>
 
         <h2>{data?.location}</h2>
