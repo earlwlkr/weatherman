@@ -8,11 +8,14 @@ export default function ForecastItem({ data }) {
       <h3>
         {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}
       </h3>
-        <img src={`https://www.metaweather.com/static/img/weather/${stateAbbr}.svg`} width={50} />
-      <p>
-        {state}
-      </p>
-      <p>
+      <div className={styles.state}>
+        <p className={styles.stateText}>{state}</p>
+        <img
+          src={`https://www.metaweather.com/static/img/weather/${stateAbbr}.svg`}
+          className={styles.icon}
+        />
+      </div>
+      <p className={styles.temps}>
         {tempMin} ~ {tempMax}
       </p>
     </div>

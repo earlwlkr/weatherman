@@ -1,6 +1,6 @@
 .card {
   margin: 1rem;
-  flex-basis: 45%;
+  flex-basis: 25%;
   padding: 1.5rem;
   text-align: left;
   color: inherit;
@@ -22,8 +22,21 @@
   font-size: 1.5rem;
 }
 
-.card p {
+.state {
+  display: flex;
+}
+
+.stateText {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+.icon {
+  width: 30px;
+}
+
+.temps {
   margin: 0;
   font-size: 1.25rem;
-  line-height: 1.5;
+  /* line-height: 1.5; */
 }
