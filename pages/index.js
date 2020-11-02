@@ -1,5 +1,6 @@
 import Head from 'next/head';
 
+import { TemperatureUnitProvider } from 'contexts/TemperatureUnitContext';
 import Home from 'components/Home';
 
 export default function Index() {
@@ -10,7 +11,9 @@ export default function Index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Home />
+      <TemperatureUnitProvider>
+        <Home />
+      </TemperatureUnitProvider>
     </>
   );
 }

@@ -2,9 +2,10 @@ import * as React from 'react';
 import useSWR from 'swr';
 import debounce from 'lodash/debounce';
 
-import styles from './Home.module.css';
+import { useTemperatureUnitFunctions } from 'contexts/TemperatureUnitContext';
 import SearchBar from 'components/SearchBar';
 import ForecastView from 'components/ForecastView';
+import styles from './Home.module.css';
 
 const fetchForecast = (url, query) =>
   fetch(url + `?q=${query}`).then((r) => r.json());
@@ -15,6 +16,7 @@ export default function Home({ initQuery }) {
     ['/api/weather/forecastNext5Days', query],
     fetchForecast
   );
+  const { switchToCelsius, switchToFahrenheit } = useTemperatureUnitFunctions();
   const isLoading = !data;
 
   const onQueryChange = debounce((text) => {
@@ -22,7 +24,7 @@ export default function Home({ initQuery }) {
   }, 500);
 
   React.useLayoutEffect(() => {
-    window.history.pushState('', '', `/${query}`);
+    window.history.pushState('', '', `/${query || ''}`);
   }, [query]);
 
   if (error) {
@@ -36,6 +38,8 @@ export default function Home({ initQuery }) {
 
         <p className={styles.description}>
           <SearchBar onChange={onQueryChange} />
+          <button onClick={switchToCelsius}>°C</button>
+          <button onClick={switchToFahrenheit}>°F</button>
         </p>
 
         {isLoading ? <div>Loading...</div> : <ForecastView data={data} />}

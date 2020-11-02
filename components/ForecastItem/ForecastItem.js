@@ -1,6 +1,34 @@
+import {
+  TemperatureUnits,
+  useTemperatureUnitState,
+} from 'contexts/TemperatureUnitContext';
+import { convertCToF } from 'common/utils';
+
 import styles from './ForecastItem.module.css';
 
+function formatAsUnit(unit) {
+  return function (tempCelsius) {
+    let unitStr;
+    switch (unit) {
+      case TemperatureUnits.FAHRENHEIT: {
+        const tempFahrenheit = convertCToF(tempCelsius);
+        unitStr = `${tempFahrenheit}°F`;
+        break;
+      }
+      default:
+      case TemperatureUnits.CELSIUS: {
+        unitStr = `${tempCelsius}°C`;
+        break;
+      }
+    }
+    return unitStr;
+  };
+}
+
 export default function ForecastItem({ data }) {
+  const temperatureUnit = useTemperatureUnitState();
+  const formatTempFunc = formatAsUnit(temperatureUnit);
+
   const { date: dateStr, state, stateAbbr, tempMax, tempMin } = data;
   const date = new Date(dateStr);
   return (
@@ -16,7 +44,7 @@ export default function ForecastItem({ data }) {
         />
       </div>
       <p className={styles.temps}>
-        {tempMin}°C ~ {tempMax}°C
+        {formatTempFunc(tempMin)} ~ {formatTempFunc(tempMax)}
       </p>
     </div>
   );
