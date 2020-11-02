@@ -1,18 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 import useSWR from 'swr';
 import debounce from 'lodash/debounce';
 
 import styles from './Home.module.css';
 import SearchBar from 'components/SearchBar';
-import ForecastList from 'components/ForecastList';
+import ForecastView from 'components/ForecastView';
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
+const fetchForecast = (url, query) =>
+  fetch(url + `?q=${query}`).then((r) => r.json());
 
-export default function Home() {
-  const [query, setQuery] = React.useState('');
+export default function Home({ initQuery }) {
+  const [query, setQuery] = React.useState(initQuery);
   const { error, data } = useSWR(
-    `/api/weather/forecastNext5Days?q=${query}`,
-    fetcher
+    ['/api/weather/forecastNext5Days', query],
+    fetchForecast
   );
 
   const onQueryChange = debounce((text) => {
@@ -20,9 +21,15 @@ export default function Home() {
     setQuery(text);
   }, 500);
 
+  React.useLayoutEffect(() => {
+    window.history.pushState('', '', `/${query}`);
+  }, [query]);
+
   if (error) {
     console.log('fetch forecast error', error);
   }
+
+  const isLoading = !data;
 
   return (
     <div className={styles.container}>
@@ -33,21 +40,8 @@ export default function Home() {
           <SearchBar onChange={onQueryChange} />
         </p>
 
-        <h2>{data?.location}</h2>
-
-        <ForecastList items={data?.forecast || []} />
+        {isLoading ? <div>Loading...</div> : <ForecastView data={data} />}
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   );
 }
