@@ -1,0 +1,18 @@
+.switchGroup {
+  display: flex;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 1.25rem;
+}
+
+.switchItem {
+  flex: 1;
+  cursor: pointer;
+}
+
+.switchItemSelected {
+  flex: 1;
+  cursor: pointer;
+  background-color: #4630eb;
+  color: white;
+}
