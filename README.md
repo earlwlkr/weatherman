@@ -51,4 +51,19 @@ Selected temperature unit is stored globally as a React Context (TemperatureUnit
 
 ### Weather service
 
-To implement new service, define a new file in services/weather and expose the function `forecastNext5Days(query)`
+To implement new service, define a new file in services/weather and expose the function `forecastNext5Days(query)`.
+
+The function must return response in the following format:
+
+```
+location: String,
+forecast: [
+  {
+    date: Date,
+    state: String,
+    stateAbbr: String,
+    tempMin: Number,
+    tempMax: Number
+  }
+]
+```
