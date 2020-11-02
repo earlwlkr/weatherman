@@ -34,7 +34,7 @@ function formatResponse(title, response) {
   }
   return {
     location: title,
-    forecast: forecast.map((item) => {
+    forecast: forecast.slice(0, 5).map((item) => {
       return {
         date: new Date(item.applicable_date),
         state: item.weather_state_name,
