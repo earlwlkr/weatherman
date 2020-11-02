@@ -1,5 +1,5 @@
 export function convertCToF(celsius) {
-  return (celsius * 9) / 5 + 32;
+  return Math.floor((celsius * 9) / 5 + 32);
 }
 
 export function dayOfWeek(date) {
