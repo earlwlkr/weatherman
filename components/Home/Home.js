@@ -15,9 +15,9 @@ export default function Home({ initQuery }) {
     ['/api/weather/forecastNext5Days', query],
     fetchForecast
   );
+  const isLoading = !data;
 
   const onQueryChange = debounce((text) => {
-    console.log(text);
     setQuery(text);
   }, 500);
 
@@ -28,8 +28,6 @@ export default function Home({ initQuery }) {
   if (error) {
     console.log('fetch forecast error', error);
   }
-
-  const isLoading = !data;
 
   return (
     <div className={styles.container}>
