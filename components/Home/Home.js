@@ -54,7 +54,7 @@ export default function Home({ initQuery }) {
           <span style={{ color: '#4630eb' }}>Weather</span>man
         </h1>
 
-        <p className={styles.description}>
+        <div className={styles.description}>
           <SearchBar onChange={onQueryChange} />
           <Switch
             options={[
@@ -63,7 +63,7 @@ export default function Home({ initQuery }) {
             ]}
             onChange={onTempUnitChange}
           />
-        </p>
+        </div>
 
         {isLoading ? <div>Loading...</div> : <ForecastView data={data} />}
       </main>

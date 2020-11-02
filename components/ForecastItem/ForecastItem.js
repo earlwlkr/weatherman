@@ -34,8 +34,8 @@ export default function ForecastItem({ data }) {
   return (
     <div className={styles.card}>
       <h3>
-        {dayOfWeek(date)} {date.getDate()}/{date.getMonth() + 1}/
-        {date.getFullYear()}
+        <div>{dayOfWeek(date)}</div>
+        {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}
       </h3>
       <div className={styles.state}>
         <p className={styles.stateText}>{state}</p>
