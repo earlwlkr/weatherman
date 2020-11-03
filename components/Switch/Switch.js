@@ -9,12 +9,14 @@ export default function Switch({ options, onChange }) {
     setSelected(index);
     const value = options[index]?.key;
     if (value) {
-      onChange(value);
+      if (typeof onChange === 'function') {
+        onChange(value);
+      }
     }
   };
 
   return (
-    <div className={styles.switchGroup}>
+    <div className={styles.switchGroup} role="switch">
       {options.map((option, index) => {
         return (
           <div

@@ -5,7 +5,9 @@ import styles from './SearchBar.module.css';
 export default function SearchBar({ onChange }) {
   const onTextChange = React.useCallback((e) => {
     const newValue = e.target.value;
-    onChange(newValue)
+    if (typeof onChange === 'function') {
+      onChange(newValue)
+    }
   }, [onChange]);
   return (
     <input
