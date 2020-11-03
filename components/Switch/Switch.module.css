@@ -1,9 +1,8 @@
 .switchGroup {
   display: flex;
-  border: 1px solid black;
-  border-radius: 4px;
   font-size: 1.25rem;
   margin-top: 0.5rem;
+  background-color: lightgray;
 }
 
 .switchItem {
