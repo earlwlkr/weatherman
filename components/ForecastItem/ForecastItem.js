@@ -33,18 +33,24 @@ export default function ForecastItem({ data }) {
   const date = new Date(dateStr);
   return (
     <div className={styles.card}>
-      <h3>
-        <div>{dayOfWeek(date)}</div>
+      <h3 aria-label="Day of week">{dayOfWeek(date)}</h3>
+      <h3 aria-label="Date">
         {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}
       </h3>
       <div className={styles.state}>
-        <p className={styles.stateText}>{state}</p>
+        <p
+          className={styles.stateText}
+          role="presentation"
+          aria-label="Forecast state"
+        >
+          {state}
+        </p>
         <img
           src={`https://www.metaweather.com/static/img/weather/${stateAbbr}.svg`}
           className={styles.icon}
         />
       </div>
-      <p className={styles.temps}>
+      <p className={styles.temps} role="presentation" aria-label="Temperatures">
         {formatTempFunc(tempMin)} ~ {formatTempFunc(tempMax)}
       </p>
     </div>

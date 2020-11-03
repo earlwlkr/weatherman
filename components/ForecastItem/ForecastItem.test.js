@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from 'test-utils';
 import '@testing-library/jest-dom/extend-expect';
 
-import { TemperatureUnitProvider } from '../../contexts/TemperatureUnitContext';
 import ForecastItem from './ForecastItem';
 
-beforeEach(() => {
-  return initializeCityDatabase();
-});
-
-test('renders correctly', async () => {
+test('renders ForecastItem correctly', async () => {
   render(
-    <TemperatureUnitProvider>
-      <ForecastItem
-        data={{
-          state: 'Showers',
-          stateAbbr: 'S',
-          tempMax: 30,
-          tempMin: 23,
-        }}
-      />
-    </TemperatureUnitProvider>
+    <ForecastItem
+      data={{
+        date: 1604330687999,
+        state: 'Showers',
+        stateAbbr: 'S',
+        tempMax: 30,
+        tempMin: 23,
+      }}
+    />
   );
 
-  fireEvent.click(screen.getByText('Load Greeting'));
-
-  await waitFor(() => screen.getByRole('heading'));
-
-  expect(screen.getByRole('heading')).toHaveTextContent('hello there');
-  expect(screen.getByRole('button')).toHaveAttribute('disabled');
+  expect(
+    screen.getByRole('heading', { name: 'Day of week' })
+  ).toHaveTextContent('Monday');
+  expect(
+    screen.getByRole('heading', { name: 'Date' })
+  ).toHaveTextContent('2/11/2020');
+  expect(
+    screen.getByRole('presentation', { name: 'Forecast state' })
+  ).toHaveTextContent('Showers');
+  expect(
+    screen.getByRole('presentation', { name: 'Temperatures' })
+  ).toHaveTextContent('23°C ~ 30°C');
 });
